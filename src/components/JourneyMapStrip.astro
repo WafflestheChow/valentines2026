@@ -1,0 +1,56 @@
+---
+import type { JourneyStop } from '../data/journey';
+
+interface Props {
+  stops: JourneyStop[];
+}
+
+const { stops } = Astro.props;
+const orderedStops = [...stops].sort((a, b) => a.order - b.order);
+---
+
+<section class="journey-map reveal" aria-labelledby="journey-title">
+  <div class="journey-head">
+    <p class="eyebrow">Journey Chapter</p>
+    <h2 id="journey-title">November to January</h2>
+    <p class="chapter-body">From reunion to new routines, every stop became part of our shared map.</p>
+  </div>
+
+  <div class="map-shell desktop" aria-hidden="true">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="route-svg">
+      <path d="M 6 64 C 20 20, 34 80, 52 40 S 84 30, 94 54" />
+    </svg>
+
+    {
+      orderedStops.map((stop) => (
+        <article class="map-stop" style={`left:${stop.xDesktop}%;top:${stop.yDesktop}%;`}>
+          <span class="pin" />
+          <div class="stop-card">
+            <p class="stop-label">{stop.label}</p>
+            <p class="stop-meta">
+              <span class="month-chip inline">{stop.month}</span>
+              {stop.tag && <span class="tag">{stop.tag}</span>}
+            </p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <ol class="map-shell mobile" aria-label="Journey stops">
+    {
+      orderedStops.map((stop) => (
+        <li class="mobile-stop">
+          <span class="pin" />
+          <div>
+            <p class="stop-label">{stop.label}</p>
+            <p class="stop-meta">
+              <span class="month-chip inline">{stop.month}</span>
+              {stop.tag && <span class="tag">{stop.tag}</span>}
+            </p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

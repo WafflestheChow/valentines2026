@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import type { Chapter } from '../data/story';
+
+interface Props {
+  chapter: Chapter;
+}
+
+const { chapter } = Astro.props;
+
+const checkpoints = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Nov 6'];
+---
+
+<section id={chapter.id} class="long-distance reveal">
+  <div class="chapter-head quiet">
+    <p class="month-chip">{chapter.month}</p>
+    {chapter.dateRange && <p class="date-range">{chapter.dateRange}</p>}
+    <h2>{chapter.title}</h2>
+    <p class="chapter-body">{chapter.body}</p>
+  </div>
+
+  <div class="split-memory" role="group" aria-label="Long-distance chapter split memory">
+    {
+      chapter.leftImage && (
+        <figure class="split-panel">
+          <Image src={chapter.leftImage} alt="Long-distance memory side A" class="split-image" />
+          {chapter.leftLine && <figcaption>{chapter.leftLine}</figcaption>}
+        </figure>
+      )
+    }
+
+    {
+      chapter.rightImage && (
+        <figure class="split-panel">
+          <Image src={chapter.rightImage} alt="Long-distance memory side B" class="split-image" />
+          {chapter.rightLine && <figcaption>{chapter.rightLine}</figcaption>}
+        </figure>
+      )
+    }
+  </div>
+
+  <ol class="checkpoint-row" aria-label="Long-distance timeline checkpoints">
+    {
+      checkpoints.map((item) => (
+        <li>
+          <span>{item}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>

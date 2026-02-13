@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import type { HeroContent } from '../data/story';
+
+interface Props {
+  content: HeroContent;
+}
+
+const { content } = Astro.props;
+---
+
+<header class="hero reveal">
+  <p class="eyebrow">Valentine's Story</p>
+  <h1>{content.title}</h1>
+  <p class="hero-subtitle">{content.subtitle}</p>
+  <Image
+    src={content.image}
+    alt={content.imageAlt}
+    class="hero-image"
+    widths={[640, 960, 1280]}
+    sizes="(max-width: 800px) 92vw, 900px"
+  />
+</header>

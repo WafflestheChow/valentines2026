@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  chapterId: string;
+  images?: ImageMetadata[];
+}
+
+const { chapterId, images = [] } = Astro.props;
+const detailsId = `gallery-${chapterId}`;
+---
+
+{
+  images.length > 0 && (
+    <details id={detailsId} class="photo-reveal reveal">
+      <summary>See more</summary>
+      <div class="gallery-grid">
+        {images.map((image, index) => (
+          <Image
+            src={image}
+            alt={`Additional memory ${index + 1}`}
+            class="gallery-image"
+            widths={[400, 700, 1000]}
+            sizes="(max-width: 800px) 100vw, 50vw"
+          />
+        ))}
+      </div>
+    </details>
+  )
+}

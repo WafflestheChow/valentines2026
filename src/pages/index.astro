@@ -1,0 +1,26 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import HeroIntro from '../components/HeroIntro.astro';
+import ChapterCard from '../components/ChapterCard.astro';
+import LongDistanceChapter from '../components/LongDistanceChapter.astro';
+import JourneyMapStrip from '../components/JourneyMapStrip.astro';
+import { chapters, heroContent } from '../data/story';
+import { journeyStops } from '../data/journey';
+
+const september = chapters.find((chapter) => chapter.id === 'september');
+const october = chapters.find((chapter) => chapter.id === 'october');
+const journeyChapters = chapters.filter((chapter) => chapter.showInJourney);
+const february = chapters.find((chapter) => chapter.id === 'february');
+---
+
+<MainLayout>
+  <HeroIntro content={heroContent} />
+
+  {september && <ChapterCard chapter={september} />}
+  {october && <LongDistanceChapter chapter={october} />}
+
+  <JourneyMapStrip stops={journeyStops} />
+  {journeyChapters.map((chapter) => <ChapterCard chapter={chapter} />)}
+
+  {february && <ChapterCard chapter={february} />}
+</MainLayout>

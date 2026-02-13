@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import PhotoReveal from './PhotoReveal.astro';
+import type { Chapter } from '../data/story';
+
+interface Props {
+  chapter: Chapter;
+}
+
+const { chapter } = Astro.props;
+const isClosing = chapter.mode === 'closing';
+---
+
+<section class:list={['chapter-card', isClosing && 'chapter-closing', 'reveal']} id={chapter.id}>
+  <div class="chapter-head">
+    <p class="month-chip">{chapter.month}</p>
+    {chapter.dateRange && <p class="date-range">{chapter.dateRange}</p>}
+    <h2>{chapter.title}</h2>
+    <p class="chapter-body">{chapter.body}</p>
+  </div>
+
+  {
+    chapter.heroImage && (
+      <Image
+        src={chapter.heroImage}
+        alt={`${chapter.month} memory`}
+        class="chapter-image"
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 800px) 92vw, 840px"
+      />
+    )
+  }
+
+  <PhotoReveal chapterId={chapter.id} images={chapter.galleryImages} />
+</section>
